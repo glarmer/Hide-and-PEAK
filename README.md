@@ -4,7 +4,7 @@ Have you ever looked at the dangerous mountains of PEAK and thought, "Gee, that'
 
 Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode featuring custom taunts, team mechanics, scoreboards, capture notifications and coloured names (oooaahh)
 
-### This mod was commissioned by [Hershey926](https://www.youtube.com/@hershy926), please check out their wonderful YouTube channel [here](https://www.youtube.com/@hershy926).
+### This mod was commissioned by [Hershy926](https://www.youtube.com/@hershy926), please check out their wonderful YouTube channel [here](https://www.youtube.com/@hershy926).
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q7IFRUH)
 
