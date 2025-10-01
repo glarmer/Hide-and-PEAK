@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dev.sweep.assistant.components.SweepConfig">
+    <option name="autoApprovedTools">
+      <set>
+        <option value="list_files" />
+        <option value="read_file" />
+        <option value="search_files" />
+        <option value="find_usages" />
+        <option value="get_errors" />
+        <option value="str_replace" />
+        <option value="create_file" />
+        <option value="multi_str_replace" />
+        <option value="apply_patch" />
+      </set>
+    </option>
+  </component>
+</project>

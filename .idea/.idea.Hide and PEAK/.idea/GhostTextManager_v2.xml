@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GhostTextManager">
+    <option name="inputs">
+      <map>
+        <entry key="@&lt;file_name&gt; @&lt;file_name&gt; @&lt;file_name&gt; @&lt;file_name&gt; can you make it so that players can pick their own colour, and that in the Death log and within the scoreboard and team selection UI their colour will be displayed?">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759165261956" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="@&lt;file_name&gt; @&lt;file_name&gt; @&lt;file_name&gt; this should play a random sound down my microphone in game but it doesnt, the last log Plugin.Log.LogInfo($&quot;[MixedAudioProvider] Playing clip: {Path.GetFileName(randomFile)}&quot;); does get output with no errors">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759174068652" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="AudioInEnumerator.MicWrapper(deviceName, (int)r.SamplingRate); does not exist, please fix it.">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="3.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759175448359" />
+                  <option value="1759175411000" />
+                  <option value="1759175388381" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="AudioInEnumerator.MicWrapper(deviceName, (int)r.SamplingRate); doesnt exist">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759175033144" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="Can you make a method that can be called to reinitialise everything? add an RPC so it can be called for other clients if i ever need it to be">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759168113710" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="Can you make two methods in HideAndSeekManager. One that can destroy all of the hide and seek game (configuration can stay loaded) and one that can reinitialise the entire hide and seek game. Then make a third helper method which calls both">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759168223907" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="Deathlog is supposed to copy the font of AscentUI, but it seems to be changing to a basic font">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759167584058" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="I hate this part of deathlog, playerStatsTransform.anchoredPosition = new Vector2(-200f, -20f);&#10;&#10;can you make it so that it is automatically aligned to the top right?">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1758972564442" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="Now make it so when all hiders have been caught the scoreboard shows for everyone for 30 seconds or until they press tab, then the game restarts to team selection UI">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759168476726" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="Take a different approach and use this class&#10;&#10;public class SFX_Instance : ScriptableObject&#10;{&#10;  public AudioClip[] clips;&#10;  public SFX_Settings settings;&#10;  internal float lastTimePlayed;&#10;&#10;  public AudioClip GetClip() =&gt; this.clips[Random.Range(0, this.clips.Length)];&#10;&#10;  public void Play(Vector3 pos = default (Vector3)) =&gt; SFX_Player.instance.PlaySFX(this, pos);&#10;&#10;  internal void OnPlayed() =&gt; this.lastTimePlayed = Time.unscaledTime;&#10;&#10;  internal bool ReadyToPlay()&#10;  {&#10;    return (double) this.lastTimePlayed &gt; (double) Time.unscaledTime + (double) this.settings.cooldown || (double) this.lastTimePlayed + (double) this.settings.cooldown &lt; (double) Time.unscaledTime;&#10;  }&#10;}&#10;&#10;make it so when i press K it plays a sound and make it so everyone can hear it.">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759176828528" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="The game defines its right click action like so:&#10;CharacterInput.action_useSecondary = UnityEngine.InputSystem.InputSystem.actions.FindAction(&quot;UseSecondary&quot;, false);&#10;&#10;can you add code to HideAndSeekPlayer.cs to do a 2 metre long ray cast and check if there are any players when this input is pressed?">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1758973302985" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="This change results in all of the names being white, the custom colour does not load">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759167180341" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="This doesn't automatically play on the other clients, can you use photon PUN RPC to make it so the same sound plays on their client please">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759177195919" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="When players are ready, the team selection UI closes and opens again, can you fix it to just close once ready&#10;&#10;@&lt;file_name&gt; @&lt;file_name&gt; @&lt;file_name&gt; @&lt;file_name&gt; @&lt;file_name&gt; @&lt;file_name&gt; @&lt;file_name&gt;">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1758971269501" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="When the game is over can you make it so the scoreboard says &quot;Game Over!&quot; and displays &quot;New game in...&quot; and then a timer ticking down?">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759169244907" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="[Error  :hide_and_peak] [MixedVoicePatch] Failed to get microphone reader from original factory!&#10;[Error  : Unity Log] NullReferenceException: Object reference not set to an instance of an object&#10;Stack trace:&#10;Photon.Voice.Unity.Recorder.CreateLocalVoiceAudioAndSource () (at &lt;3ff2b511de1a41cb88eb39b00d5f03f2&gt;:0)&#10;Photon.Voice.Unity.Recorder.StartRecording () (at &lt;3ff2b511de1a41cb88eb39b00d5f03f2&gt;:0)&#10;Photon.Voice.Unity.Recorder.Update () (at &lt;3ff2b511de1a41cb88eb39b00d5f03f2&gt;:0)">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759174978356" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="can you find out why the deathlog doesnt display for the host? it displays on the others screens. this is despite adddeath running on the host and the log in update working on the host as well.">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1758972200660" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="can you stop the camera moving when i move the cursor on team selection UI">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1758975567024" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="r.CreateDefaultSource(); doesnt exist">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759174344183" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="r.IsRecording doesnt exist">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759174821918" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="still doesnt work and now microphone doesnt work either">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759174661735" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="yes please add a small margin, can you also make it so pressing F5 will run a test death so I can see it in game?">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1758972677348" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="you broke it IBufferReader is not real">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759174277197" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="you've introduced bugs">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1759174749315" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
