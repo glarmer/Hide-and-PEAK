@@ -316,10 +316,6 @@ public class HideAndSeekManager : MonoBehaviourPunCallbacks
             Plugin.Log.LogInfo("[GameEnd] All hiders caught! Ending game...");
             _gameEndSequenceActive = true;
             View.RPC("RPC_ShowEndGameScoreboard", RpcTarget.All);
-            if (IsHost())
-            {
-                MapHandler.JumpToSegment(Segment.Beach);
-            }
         }
     }
     
