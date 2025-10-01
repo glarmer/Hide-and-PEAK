@@ -6,6 +6,8 @@ Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode 
 
 ### This mod was commissioned by [Hershey926](https://www.youtube.com/@hershy926), please check out their wonderful YouTube channel [here](https://www.youtube.com/@hershy926).
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q7IFRUH)
+
 ---
 
 ## Features
@@ -21,8 +23,7 @@ Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode 
 
 ## Configuration
 
-* Open the configuration menu with **F9**.
-* Options include:
+* You can open the configuration menu with **F9**. Options include:
 
   * Taunt start time
   * Taunt interval
@@ -38,6 +39,10 @@ Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode 
 * Everyone needs this mod installed
 * Do **not** report bugs to the game developers while using mods. Test without mods first to ensure issues are truly game-related.
 * Only download the mod from official sources to avoid malware.
+
+The only official pages for this mod are as follows:
+- Thunderstore: https://thunderstore.io/c/peak/p/glarmer/Hide_and_PEAK/
+- GitHub: https://github.com/glarmer/Hide-and-PEAK
 
 ---
 
@@ -60,3 +65,6 @@ Only the host needs to install this mod.
 
 * Find your PEAK folder via Steam: **Right-click PEAK -> Manage -> Browse Local Files**.
 * Report problems or request features via the [GitHub repository](https://github.com/glarmer/HideAndPEAK).
+
+### Commissions
+Did you know I take commissions? Contact me on discord @glarmer if you'd like to discuss! Note: All commissions must go through PayPal for the safety of you as a buyer and me as a seller.
