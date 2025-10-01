@@ -15,7 +15,7 @@ Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode 
 * Team selection UI and in-game scoreboard.
 * Grace period for Hiders at the start of each round.
 * Player stats tracking including catches and deaths.
-* Easy-to-use configuration menu (F9) for timing, intervals, and more.
+* Easy-to-use configuration menu (F9) for controlling the game.
 
 ---
 
