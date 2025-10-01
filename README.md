@@ -44,7 +44,7 @@ Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode 
 * Sounds sourced from: [WavSource](https://www.wavsource.com/)
 
 The only official pages for this mod are as follows:
-- Thunderstore: https://thunderstore.io/c/peak/p/glarmer/Hide_and_PEAK/
+- Thunderstore: https://thunderstore.io/c/peak/p/glarmer/Hide_and_PEAK_/
 - GitHub: https://github.com/glarmer/Hide-and-PEAK
 
 ---
