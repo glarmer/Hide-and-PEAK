@@ -2,7 +2,7 @@
 
 Have you ever looked at the dangerous mountains of PEAK and thought, "Gee, that'd make an amazing hiding place!"
 
-![hide_and_peak](https://github.com/glarmer/Hide-and-PEAK/blob/master/hideandpeak.gif)
+![hide_and_peak](https://glarmer.xyz/images/hideandpeak/hideandpeak.gif)
 
 Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode featuring custom taunts, team mechanics, scoreboards, capture notifications and coloured names (oooaahh)
 
