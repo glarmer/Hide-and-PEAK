@@ -114,6 +114,7 @@ public class SoundPlayer : MonoBehaviour
         }
 
         if (!HideAndSeekManager.Instance.IsHost()) return;
+        if (Plugin.ConfigurationHandler.ConfigTauntsEnabled.Value == false) return;
 
         foreach (Character character in Character.AllCharacters)
         {

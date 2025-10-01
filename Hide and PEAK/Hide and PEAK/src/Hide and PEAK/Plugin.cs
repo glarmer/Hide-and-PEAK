@@ -59,6 +59,7 @@ public partial class Plugin : BaseUnityPlugin
             Option.Int("Taunt Start Time (seconds)", ConfigurationHandler.ConfigTauntStartTime, 1, 900, 10),
             Option.Int("Taunt Interval Time (seconds)", ConfigurationHandler.ConfigTauntIntervalTime, 1, 600, 10),
             Option.Int("Hider Grace Period (seconds)", ConfigurationHandler.ConfigHiderGracePeriod, 1, 60, 1),
+            Option.Bool("Taunts Enabled", ConfigurationHandler.ConfigTauntsEnabled),
             Option.Bool("Seeker Voice", ConfigurationHandler.ConfigSeekerVoice),
             Option.Colour("Name Colour", ConfigurationHandler.NameColourR, ConfigurationHandler.NameColourG, ConfigurationHandler.NameColourB)
 

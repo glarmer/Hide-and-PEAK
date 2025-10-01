@@ -24,6 +24,7 @@ namespace Hide_and_PEAK.Configuration
         public ConfigEntry<string> ConfigScoreBoardKey;
         public ConfigEntry<string> ConfigTeamSelectionUIKey;
         public ConfigEntry<bool> ConfigSeekerVoice;
+        public ConfigEntry<bool> ConfigTauntsEnabled;
         public ConfigEntry<int> ConfigTauntStartTime;
         public ConfigEntry<int> ConfigTauntIntervalTime;
         public ConfigEntry<int> ConfigHiderGracePeriod;
@@ -85,6 +86,14 @@ namespace Hide_and_PEAK.Configuration
                 "If enabled, seekers will be able to hear each other from any distance."
             );
             Plugin.Log.LogInfo("ConfigurationHandler: Seeker Voice Enabled: " + ConfigSeekerVoice.Value);
+            
+            ConfigTauntsEnabled = _config.Bind(
+                "Gameplay",
+                "Taunts Enabled",
+                true,
+                "If enabled, taunts will be played during the game."
+            );
+            Plugin.Log.LogInfo("ConfigurationHandler: Taunts Enabled: " + ConfigTauntsEnabled.Value);
             
             ConfigTauntStartTime = _config.Bind(
                 "Gameplay",
