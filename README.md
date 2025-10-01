@@ -58,5 +58,5 @@ Only the host needs to install this mod.
 
 ## Help
 
-* Find your PEAK folder via Steam: **Right-click PEAK → Manage → Browse Local Files**.
+* Find your PEAK folder via Steam: **Right-click PEAK -> Manage -> Browse Local Files**.
 * Report problems or request features via the [GitHub repository](https://github.com/glarmer/HideAndPEAK).
