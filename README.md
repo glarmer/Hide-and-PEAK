@@ -45,8 +45,6 @@ The only official pages for this mod are as follows:
 - Thunderstore: https://thunderstore.io/c/peak/p/glarmer/Hide_and_PEAK_/
 - GitHub: https://github.com/glarmer/Hide-and-PEAK
 
----
-
 ## Commissions
 Did you know I take commissions? Contact me on discord @glarmer if you'd like to discuss! Note: All commissions must go through PayPal for the safety of you as a buyer and me as a seller.
 
