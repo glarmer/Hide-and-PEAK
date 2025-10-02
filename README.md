@@ -35,13 +35,13 @@ Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode 
 
 ### Sound Customisation
 
-Similar to Garry's Mod Prophunt, this hide and seek mod features a configurable sound based taunt system, when you install the mod a /sounds/ folder will be in the same directory as the mod, you can place any .wav file you like in here but you need to make sure that you and the host have the same wavs, otherwise you will not hear the taunts. By default some simple comedic sounds are in the folder, so the mod is ready to go after being installed.
+Similar to Garry's Mod Prophunt, this hide and seek mod features a configurable sound based taunt system, when you install the mod a `/sounds/` folder will be in the same directory as the mod, you can place any .wav file you like in here but you need to make sure that you and the host have the same wavs, otherwise you will not hear the taunts. By default some simple comedic sounds are in the folder, so the mod is ready to go after being installed.
 
 ---
 
 ## Important Notes
 
-* **Sounds folder:** The `sounds` folder in your PEAK directory **must contain the exact set of WAV files** used by the host. Missing or mismatched files will result in missing taunts or errors.
+* **Sounds folder:** The `sounds` folder in your plugin directory **must contain the exact set of WAV files** used by the host. Missing or mismatched files will result in you not hearing taunts.
 * Everyone needs this mod installed
 * Do **not** report bugs to the game developers while using mods. Test without mods first to ensure issues are truly game-related.
 * Only download the mod from official sources to avoid malware.
