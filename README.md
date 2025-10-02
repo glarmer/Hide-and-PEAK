@@ -33,6 +33,10 @@ Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode 
   * Seeker voice toggle
   * Name color customization
 
+### Sound Customisation
+
+Similar to Garry's Mod Prophunt, this hide and seek mod features a configurable sound based taunt system, when you install the mod a /sounds/ folder will be in the same directory as the mod, you can place any .wav file you like in here but you need to make sure that you and the host have the same wavs, otherwise you will not hear the taunts. By default some simple comedic sounds are in the folder, so the mod is ready to go after being installed.
+
 ---
 
 ## Important Notes
@@ -51,16 +55,15 @@ The only official pages for this mod are as follows:
 
 ## Manual Installation
 
-Only the host needs to install this mod.
-
-1. Download BepInEx from [here](https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.3/BepInEx_win_x64_5.4.23.3.zip)
-2. Extract the contents of the zip into your game directory (default: `C:\Program Files (x86)\Steam\steamapps\common\PEAK`). You should end up with folders like `BepInEx`, `doorstop_config.ini`, etc.
-3. Start the game once and then close it to complete the BepInEx setup.
-
-   * **Linux users:** Set the launch option `WINEDLLOVERRIDES="winhttp=n,b" %command%` before running the game.
-4. Navigate to `...\PEAK\BepInEx\plugins` and copy the `HideAndPEAK.dll` from releases into this folder.
-5. If you customise your taunts, ensure the `sounds` folder econtains **the same WAV files** as the host.
-6. Run the game.
+1.) Download Bepinex from [here](https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.3/BepInEx_win_x64_5.4.23.3.zip) <br>
+2.) Extract the contents of that zip into your game directory (default: C:\Program Files (x86)\Steam\steamapps\common\PEAK) resulting in a folder that has the following files: <br>
+![image](https://github.com/user-attachments/assets/403d9a1d-16a4-409c-a046-bc56141ac0ca) <br>
+3.) Start the game and close it again, this does the first time set up for Bepinex. <br>
+- Linux users: set the launch option `WINEDLLOVERRIDES="winhttp=n,b" %command%` before running the game.
+  
+4.) Navigate to ...\PEAK\BepInEx\plugins, Download and extract the PeakUnlimited.dll from "Manual Download" on Thunderstore into this folder. <br>
+5.) If you customise your taunts, ensure the `sounds` folder econtains **the same WAV files** as the host. <br>
+6.) Run the game <br>
 
 ---
 
