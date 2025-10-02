@@ -10,8 +10,6 @@ Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode 
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q7IFRUH)
 
----
-
 ## Features
 
 * Custom taunt sounds for Hiders.
@@ -20,8 +18,6 @@ Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode 
 * Grace period for Hiders at the start of each round.
 * Player stats tracking including catches and deaths.
 * Easy-to-use configuration menu (F9) for controlling the game.
-
----
 
 ## Configuration
 
@@ -37,8 +33,6 @@ Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode 
 
 Similar to Garry's Mod Prophunt, this hide and seek mod features a configurable sound based taunt system, when you install the mod a `/sounds/` folder will be in the same directory as the mod, you can place any .wav file you like in here but you need to make sure that you and the host have the same wavs, otherwise you will not hear the taunts. By default some simple comedic sounds are in the folder, so the mod is ready to go after being installed.
 
----
-
 ## Important Notes
 
 * **Sounds folder:** The `sounds` folder in your plugin directory **must contain the exact set of WAV files** used by the host. Missing or mismatched files will result in you not hearing taunts.
@@ -53,6 +47,9 @@ The only official pages for this mod are as follows:
 
 ---
 
+## Commissions
+Did you know I take commissions? Contact me on discord @glarmer if you'd like to discuss! Note: All commissions must go through PayPal for the safety of you as a buyer and me as a seller.
+
 ## Manual Installation
 
 1.) Download Bepinex from [here](https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.3/BepInEx_win_x64_5.4.23.3.zip) <br>
@@ -65,12 +62,7 @@ The only official pages for this mod are as follows:
 5.) If you customise your taunts, ensure the `sounds` folder econtains **the same WAV files** as the host. <br>
 6.) Run the game <br>
 
----
-
 ## Help
 
 * Find your PEAK folder via Steam: **Right-click PEAK -> Manage -> Browse Local Files**.
 * Report problems or request features via the [GitHub repository](https://github.com/glarmer/HideAndPEAK).
-
-### Commissions
-Did you know I take commissions? Contact me on discord @glarmer if you'd like to discuss! Note: All commissions must go through PayPal for the safety of you as a buyer and me as a seller.
