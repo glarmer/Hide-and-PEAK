@@ -59,6 +59,9 @@ public class DeathLog : MonoBehaviour
         if (_text == null) return;
 
         var sb = new System.Text.StringBuilder();
+        
+        sb.Append("\n ");
+        sb.Append("\n ");
 
         for (var i = _deaths.Count - 1; i >= 0; i--)
         {
