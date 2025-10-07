@@ -243,6 +243,8 @@ public class HideAndSeekManager : MonoBehaviourPunCallbacks
 
         if ((Team)hiderTeam == Team.Hider && (Team)seekerTeam == Team.Seeker)
         {
+            hiderCharacter.AddStamina(1f);
+            hiderCharacter.refs.afflictions.ClearAllStatus(false);
             int hiderViewId = hiderCharacter.refs.view.ViewID;
             if (_processingCaught.Contains(hiderViewId)) return;
             _processingCaught.Add(hiderViewId);
