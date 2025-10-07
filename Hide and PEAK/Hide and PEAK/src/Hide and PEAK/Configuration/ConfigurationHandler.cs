@@ -32,9 +32,9 @@ namespace Hide_and_PEAK.Configuration
         public ConfigEntry<int> NameColourG;
         public ConfigEntry<int> NameColourB;
 
-        public ConfigurationHandler()
+        public ConfigurationHandler(ConfigFile configFile)
         {
-            _config = new ConfigFile(Path.Combine(Paths.ConfigPath, Plugin.Name + ".cfg"), true);
+            _config = configFile;
 
             
             ConfigFreezeKey = _config.Bind(

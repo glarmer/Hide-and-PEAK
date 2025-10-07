@@ -45,7 +45,7 @@ public partial class Plugin : BaseUnityPlugin
         _harmony.PatchAll(typeof(RunManagerStartRunPatch));
         _harmony.PatchAll(typeof(CharacterDeathPosPatch));
         
-        ConfigurationHandler = new ConfigurationHandler();
+        ConfigurationHandler = new ConfigurationHandler(Config);
         
         var go = new GameObject("HideAndPEAKConfigUI");
         DontDestroyOnLoad(go);
