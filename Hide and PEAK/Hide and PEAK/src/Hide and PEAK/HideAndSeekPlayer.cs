@@ -31,10 +31,10 @@ public class HideAndSeekPlayer : MonoBehaviour
         
         if (IsSeeker && Character.localCharacter.input != null && Character.localCharacter.input.useSecondaryIsPressed)
         {
-            TryRaycastCatch(2f);
-        } else if (IsSeeker && Character.localCharacter.input != null && !Character.localCharacter.input.useSecondaryIsPressed)
+            TryRaycastConeCatch(2f, 20);
+        } else if (IsSeeker)
         {
-            TryRaycastCatch(0.8f);
+            TryRaycastConeCatch(1.0f, 45);
         } 
 
         if (Character.localCharacter.data.dead || Character.localCharacter.refs.customization.isDead)
@@ -54,7 +54,7 @@ public class HideAndSeekPlayer : MonoBehaviour
         }
     }
 
-    private void TryRaycastCatch(float distance)
+    private void TryRaycastConeCatch(float distance, float spreadAngle)
     {
         if (MainCamera == null)
         {
@@ -69,31 +69,39 @@ public class HideAndSeekPlayer : MonoBehaviour
         if (!HideAndSeekManager.Instance || !HideAndSeekManager.Instance.IsGameActive)
             return;
 
+        Vector3 origin = MainCamera.transform.position;
+        Vector3 forward = MainCamera.transform.forward;
         
-        Ray ray = new Ray(MainCamera.transform.position, MainCamera.transform.forward);
-        if (Physics.Raycast(ray, out var hit, distance))
+        Vector3[] directions = new Vector3[5];
+        directions[0] = forward; // center
+        directions[1] = Quaternion.Euler(spreadAngle, 0f, 0f) * forward;   // up
+        directions[2] = Quaternion.Euler(-spreadAngle, 0f, 0f) * forward;  // down
+        directions[3] = Quaternion.Euler(0f, spreadAngle, 0f) * forward;   // right
+        directions[4] = Quaternion.Euler(0f, -spreadAngle, 0f) * forward;  // left
+
+        foreach (var dir in directions)
         {
-            Character targetCharacter = hit.collider.GetComponentInParent<Character>();
-            if (targetCharacter == null) return;
-            if (Character.localCharacter != null && targetCharacter == Character.localCharacter) return;
-
-            Plugin.Log.LogInfo($"[HideAndSeekPlayer] UseSecondary hit: {targetCharacter.characterName}");
-
-            if (HideAndSeekManager.Instance == null)
+            if (Physics.Raycast(origin, dir, out var hit, distance))
             {
-                Plugin.Log.LogError("[HideAndSeekPlayer] HideAndSeekManager is null! Cannot catch hider.");
-                return;
-            }
-            
-            int seekerViewId = Character.localCharacter.refs.view.ViewID;
-            int hiderViewId = targetCharacter.refs.view.ViewID;
+                Character targetCharacter = hit.collider.GetComponentInParent<Character>();
+                if (targetCharacter == null) continue;
+                if (Character.localCharacter != null && targetCharacter == Character.localCharacter) continue;
 
-            HideAndSeekManager.Instance.View.RPC(
-                "RPC_RequestCatch",
-                RpcTarget.MasterClient,
-                seekerViewId,
-                hiderViewId
-            );
+                Plugin.Log.LogInfo($"[HideAndSeekPlayer] Cone ray hit: {targetCharacter.characterName}");
+
+                int seekerViewId = Character.localCharacter.refs.view.ViewID;
+                int hiderViewId = targetCharacter.refs.view.ViewID;
+
+                HideAndSeekManager.Instance.View.RPC(
+                    "RPC_RequestCatch",
+                    RpcTarget.MasterClient,
+                    seekerViewId,
+                    hiderViewId
+                );
+                break;
+            }
         }
     }
+
+
 }
