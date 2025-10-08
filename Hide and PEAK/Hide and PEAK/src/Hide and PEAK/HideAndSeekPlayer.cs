@@ -31,10 +31,10 @@ public class HideAndSeekPlayer : MonoBehaviour
         
         if (IsSeeker && Character.localCharacter.input != null && Character.localCharacter.input.useSecondaryIsPressed)
         {
-            TryRaycastConeCatch(2f, 15);
+            TryRaycastConeCatch(1.4f, 15);
         } else if (IsSeeker)
         {
-            TryRaycastConeCatch(1.0f, 35);
+            TryRaycastConeCatch(0.9f, 35);
         } 
 
         if (Character.localCharacter.data.dead || Character.localCharacter.refs.customization.isDead)
