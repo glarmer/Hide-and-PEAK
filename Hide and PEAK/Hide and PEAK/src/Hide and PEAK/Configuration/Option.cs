@@ -5,7 +5,7 @@ namespace Hide_and_PEAK.Configuration;
 
 public class Option
 {
-    public enum OptionType { Bool, Int, String, InputAction, Colour }
+    public enum OptionType { Bool, Int, String, InputAction, Colour, Float }
     
     public string Label {get; set;}
     public OptionType Type {get; set;}
@@ -15,6 +15,10 @@ public class Option
     public int MinInt  {get; set;}
     public int MaxInt  {get; set;}
     public int Step {get; set;}
+    public ConfigEntry<float> FloatEntry {get; set;}
+    public float MinFloat {get; set;}
+    public float MaxFloat {get; set;}
+    public float StepFloat {get; set;}
     public Func<bool> IsDisabled { get; set; } = () => false;
     public Func<string> DisplayValue { get; set; } = () => "";
 
@@ -67,6 +71,19 @@ public class Option
             MinInt = min,
             MaxInt = max,
             Step = step,
+            IsDisabled = isDisabled ?? (() => false),
+            DisplayValue = () => entry.Value.ToString()
+        };
+    }
+    
+    public static Option Float(string label, ConfigEntry<float> entry, float min, float max, float step = 0.1f, Func<bool>? isDisabled = null)
+    {
+        return new Option(label, OptionType.Float)
+        {
+            FloatEntry = entry,
+            MinFloat = min,
+            MaxFloat = max,
+            StepFloat = step,
             IsDisabled = isDisabled ?? (() => false),
             DisplayValue = () => entry.Value.ToString()
         };

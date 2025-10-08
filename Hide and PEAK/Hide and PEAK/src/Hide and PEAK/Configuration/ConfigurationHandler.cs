@@ -31,6 +31,8 @@ namespace Hide_and_PEAK.Configuration
         public ConfigEntry<int> NameColourR;
         public ConfigEntry<int> NameColourG;
         public ConfigEntry<int> NameColourB;
+        public ConfigEntry<float> ReachCatchLength;
+        public ConfigEntry<float> BaseCatchLength;
 
         public ConfigurationHandler(ConfigFile configFile)
         {
