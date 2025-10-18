@@ -79,14 +79,14 @@ public partial class Plugin : BaseUnityPlugin
                 case RichPresenceState.Status_MainMenu:
                     if (_isInitialised)
                     {
-                        Log.LogInfo($"[Plugin] tearing down mod");
+                        Log.LogInfo($"[Plugin] Player left the game. Unloading current Hide and PEAK components");
                         TeardownMod();
                     }
                     break;
                 case RichPresenceState.Status_Airport:
                     if (_isInitialised)
                     {
-                        Log.LogInfo($"[Plugin] tearing down mod");
+                        Log.LogInfo($"[Plugin] Players are at the airport. Unloading Hide and PEAK components until next run");
                         TeardownMod();
                     }
                     break;
