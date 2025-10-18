@@ -243,13 +243,13 @@ public class HideAndSeekManager : MonoBehaviourPunCallbacks
 
         if ((Team)hiderTeam == Team.Hider && (Team)seekerTeam == Team.Seeker)
         {
-            hiderCharacter.AddStamina(1f);
-            hiderCharacter.refs.afflictions.ClearAllStatus(false);
+            
             int hiderViewId = hiderCharacter.refs.view.ViewID;
             if (_processingCaught.Contains(hiderViewId)) return;
             _processingCaught.Add(hiderViewId);
 
             Plugin.Log.LogInfo("Team swap 1");
+            View.RPC("RPC_ResetStamina", hider);
             View.RPC("RPC_AddDeath", RpcTarget.All, seekerCharacter.refs.view.ViewID, hiderCharacter.refs.view.ViewID);
             Plugin.Log.LogInfo("Team swap 2");
         
@@ -278,6 +278,14 @@ public class HideAndSeekManager : MonoBehaviourPunCallbacks
                 StartCoroutine(CheckGameEndAfterDelay(0.5f));
             }
         }
+    }
+    
+    [PunRPC]
+    public void RPC_ResetStamina()
+    {
+        Plugin.Log.LogInfo("[HideAndSeekManager] Resetting local character stamina");
+        Character.localCharacter?.AddStamina(1f);
+        Character.localCharacter?.refs.afflictions.ClearAllStatus(false);
     }
 
     private IEnumerator ClearProcessingAfterDelay(int viewId, float delay)
