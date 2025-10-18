@@ -112,6 +112,8 @@ public class SoundPlayer : MonoBehaviour
             Plugin.Log.LogWarning("[SoundPlayer] No sounds loaded yet!");
             return;
         }
+        
+        Plugin.Log.LogInfo("[SoundPlayer: PlayRandomSound] Host triggering random sound");
 
         if (!HideAndSeekManager.Instance.IsHost()) return;
         if (Plugin.ConfigurationHandler.ConfigTauntsEnabled.Value == false) return;
@@ -127,7 +129,7 @@ public class SoundPlayer : MonoBehaviour
                 AudioClip clip = loadedClips[Random.Range(0, loadedClips.Count)];
                 Vector3 pos = character.GetCameraPos(0f);
                 HideAndSeekManager.Instance.View.RPC("RPC_PlaySound", RpcTarget.All, clip.name, pos);
-                Plugin.Log.LogInfo($"[SoundPlayer] Host broadcasting sound: {clip.name} at {pos}");
+                Plugin.Log.LogInfo($"[SoundPlayer: PlayRandomSound] Host broadcasting sound: {clip.name} at {pos}");
             }
         }
     }

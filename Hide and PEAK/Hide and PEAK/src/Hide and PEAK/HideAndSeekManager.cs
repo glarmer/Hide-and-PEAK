@@ -326,7 +326,15 @@ public class HideAndSeekManager : MonoBehaviourPunCallbacks
             Plugin.Log.LogInfo("[GameEnd] All hiders caught! Ending game...");
             _gameEndSequenceActive = true;
             View.RPC("RPC_ShowEndGameScoreboard", RpcTarget.All);
+            View.RPC("RPC_ResetInfiniteStamina", RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    private void RPC_ResetInfiniteStamina()
+    {
+        Plugin.Log.LogInfo("[HideAndSeekManager] Resetting local character infinite stamina");
+        Character.localCharacter.infiniteStam = false;
     }
     
     private void SaveCurrentMatch()
