@@ -7,6 +7,8 @@ Have you ever looked at the dangerous mountains of PEAK and thought, "Gee, that'
 Introducing **Hide and PEAK**, a mod for PEAK that add a Hide and Seek gamemode featuring custom taunts, team mechanics, scoreboards, capture notifications and coloured names (oooaahh)
 
 ### This mod was commissioned by [Hershy926](https://www.youtube.com/@hershy926), please check out their wonderful YouTube channel [here](https://www.youtube.com/@hershy926).
+#### Check out their video showcasing the mod below!
+[![Check out their video here!](https://img.youtube.com/vi/_rBRLbkFaYQ/0.jpg)](https://youtu.be/_rBRLbkFaYQ)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q7IFRUH)
 
@@ -48,6 +50,12 @@ The only official pages for this mod are as follows:
 ## Commissions
 Did you know I take commissions? Contact me on discord @glarmer if you'd like to discuss! Note: All commissions must go through PayPal for the safety of you as a buyer and me as a seller.
 
+## My other mods
+
+- [PEAK Unlimited](https://thunderstore.io/c/peak/p/glarmer/PEAK_Unlimited/) - Allows you to rebind your keys
+- [Voice Volume Saver](https://thunderstore.io/c/peak/p/glarmer/PEAK_Voice_Volume_Saver/) - Saves the volume of all your friends, no more adjusting their volume every time you load in!
+- [Discplacement](https://thunderstore.io/c/peak/p/glarmer/Discplacement/) - Turns the frisbee into a teleportation device with various balance settings
+
 ## Manual Installation
 
 1.) Download Bepinex from [here](https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.3/BepInEx_win_x64_5.4.23.3.zip) <br>
@@ -56,7 +64,7 @@ Did you know I take commissions? Contact me on discord @glarmer if you'd like to
 3.) Start the game and close it again, this does the first time set up for Bepinex. <br>
 - Linux users: set the launch option `WINEDLLOVERRIDES="winhttp=n,b" %command%` before running the game.
   
-4.) Navigate to ...\PEAK\BepInEx\plugins, Download and extract the PeakUnlimited.dll from "Manual Download" on Thunderstore into this folder. <br>
+4.) Navigate to ...\PEAK\BepInEx\plugins, Download and extract the hide_and_peak.dll from "Manual Download" on Thunderstore into this folder. <br>
 5.) If you customise your taunts, ensure the `sounds` folder econtains **the same WAV files** as the host. <br>
 6.) Run the game <br>
 
