@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -228,44 +229,44 @@ public class ModConfigurationUI : MenuWindow
         EnsureStyles();
         CalculatePanelWidth();
 
-        float titleHeight = _titleStyle.CalcHeight(new GUIContent(titleText), PanelWidth - Pad * 2);
-        float hintHeight = _hintStyle.CalcHeight(new GUIContent(hintText), PanelWidth - Pad * 2);
+        var titleHeight = _titleStyle.CalcHeight(new GUIContent(titleText), PanelWidth - Pad * 2);
+        var hintHeight = _hintStyle.CalcHeight(new GUIContent(hintText), PanelWidth - Pad * 2);
 
-        
-        List<float> rowHeights = new List<float>();
-        float contentHeight = 0f;
+        var rowHeights = new List<float>();
+        var contentHeight = 0f;
         foreach (var option in _options)
         {
             float currentHeight = RowHeight;
-
             if (option.Type == Option.OptionType.Colour)
             {
-                float labelHeight = _rowStyle.CalcHeight(new GUIContent("Name Color"), PanelWidth - Pad * 2);
-                float barHeight = 16f; 
-                currentHeight = labelHeight + barHeight + 4; 
+                var labelHeight = _rowStyle.CalcHeight(new GUIContent("Name Color"), PanelWidth - Pad * 2);
+                var barHeight = 16f;
+                currentHeight = labelHeight + barHeight + 4;
             }
 
             rowHeights.Add(currentHeight);
             contentHeight += currentHeight + 4;
         }
 
-        int panelHeight = Pad + (int)titleHeight + 8 + (int)contentHeight + Pad + (int)hintHeight + ButtonHeight + ButtonHintSpacing;
-        Rect panelRect = new Rect(20, 20, PanelWidth, panelHeight);
+        var panelHeight = Pad + (int)titleHeight + 8 + (int)contentHeight
+                          + RowHeight * 2 + 16
+                          + Pad + (int)hintHeight + ButtonHeight + ButtonHintSpacing;
+
+        var panelRect = new Rect(20, 20, PanelWidth, panelHeight);
 
         GUI.color = new Color(0f, 0f, 0f, 0.75f);
         GUI.DrawTexture(panelRect, _whiteTex);
         GUI.color = Color.white;
 
-        
-        GUI.Label(new Rect(panelRect.x + Pad, panelRect.y + Pad, panelRect.width - Pad * 2, titleHeight), titleText, _titleStyle);
+        GUI.Label(new Rect(panelRect.x + Pad, panelRect.y + Pad, panelRect.width - Pad * 2, titleHeight), titleText,
+            _titleStyle);
 
-        
-        float optionY = panelRect.y + Pad + titleHeight + 8;
-        for (int i = 0; i < _options.Count; i++)
+        var optionY = panelRect.y + Pad + titleHeight + 8;
+        for (var i = 0; i < _options.Count; i++)
         {
             var option = _options[i];
-            float currentRowHeight = rowHeights[i];
-            Rect rowRect = new Rect(panelRect.x + Pad, optionY, panelRect.width - Pad * 2, currentRowHeight);
+            var currentRowHeight = rowHeights[i];
+            var rowRect = new Rect(panelRect.x + Pad, optionY, panelRect.width - Pad * 2, currentRowHeight);
 
             if (rowRect.Contains(Event.current.mousePosition) && !option.IsDisabled())
             {
@@ -286,17 +287,64 @@ public class ModConfigurationUI : MenuWindow
             optionY += currentRowHeight + 4;
         }
 
-        
-        Rect hintRect = new Rect(panelRect.x + Pad, optionY, panelRect.width - Pad * 2, hintHeight);
+        float buttonLabelHeight = RowHeight;
+        var mapButtonLabelRect = new Rect(panelRect.x + Pad, optionY, panelRect.width - Pad * 2, buttonLabelHeight);
+        GUI.Label(mapButtonLabelRect, "Jump to Segment", _titleStyle);
+        optionY += buttonLabelHeight + 4;
+
+        var allSegments = Enum.GetNames(typeof(Segment));
+        var segments = new List<string>();
+        foreach (var s in allSegments)
+            if (!s.Equals("Peak", StringComparison.OrdinalIgnoreCase))
+                segments.Add(s);
+
+        var totalButtons = segments.Count;
+        var buttonHeight = RowHeight * 1.1f;
+        var spacing = 10f;
+        var availableWidth = panelRect.width - Pad * 2;
+        var buttonWidth = (availableWidth - (totalButtons - 1) * spacing) / totalButtons;
+
+        var buttonX = panelRect.x + Pad;
+        var buttonY = optionY;
+
+        for (var i = 0; i < totalButtons; i++)
+        {
+            var btnRect = new Rect(buttonX, buttonY, buttonWidth, buttonHeight);
+            GUI.color = new Color(0.3f, 0.3f, 0.3f, 0.8f);
+            GUI.DrawTexture(btnRect, _whiteTex);
+            GUI.color = Color.white;
+
+            if (GUI.Button(btnRect, segments[i], _buttonStyle))
+                try
+                {
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        var seg = (Segment)Enum.Parse(typeof(Segment), segments[i]);
+                        MapHandler.JumpToSegment(seg);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Plugin.Log.LogError($"Failed to jump to segment {segments[i]}: {ex}");
+                }
+
+            buttonX += buttonWidth + spacing;
+        }
+
+        optionY = buttonY + buttonHeight + 8;
+
+        var hintRect = new Rect(panelRect.x + Pad, optionY, panelRect.width - Pad * 2, hintHeight);
         GUI.Label(hintRect, hintText, _hintStyle);
 
-        
-        float buttonY = hintRect.yMax + ButtonHintSpacing;
-        if (GUI.Button(new Rect(panelRect.xMax - ButtonWidth * 2 - Pad, buttonY, ButtonWidth, ButtonHeight), "+", _buttonStyle))
+        buttonY = hintRect.yMax + ButtonHintSpacing;
+        if (GUI.Button(new Rect(panelRect.xMax - ButtonWidth * 2 - Pad, buttonY, ButtonWidth, ButtonHeight), "+",
+                _buttonStyle))
             Scale(1);
-        if (GUI.Button(new Rect(panelRect.xMax - ButtonWidth - Pad, buttonY, ButtonWidth, ButtonHeight), "-", _buttonStyle))
+        if (GUI.Button(new Rect(panelRect.xMax - ButtonWidth - Pad, buttonY, ButtonWidth, ButtonHeight), "-",
+                _buttonStyle))
             Scale(-1);
     }
+
 
     private void DrawBoolOption(Option option, Rect rect)
     {
