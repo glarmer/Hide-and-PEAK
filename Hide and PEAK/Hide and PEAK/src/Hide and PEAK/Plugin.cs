@@ -44,6 +44,7 @@ public partial class Plugin : BaseUnityPlugin
         _harmony.PatchAll(typeof(CharacterMovementUpdatePatch));
         _harmony.PatchAll(typeof(RunManagerStartRunPatch));
         _harmony.PatchAll(typeof(CharacterDeathPosPatch));
+        _harmony.PatchAll(typeof(WindChillZoneHandleTimePatch));
         
         ConfigurationHandler = new ConfigurationHandler(Config);
         
@@ -61,8 +62,8 @@ public partial class Plugin : BaseUnityPlugin
             Option.Int("Hider Grace Period (seconds)", ConfigurationHandler.ConfigHiderGracePeriod, 1, 60, 1),
             Option.Bool("Taunts Enabled", ConfigurationHandler.ConfigTauntsEnabled),
             Option.Bool("Seeker Voice", ConfigurationHandler.ConfigSeekerVoice),
-            Option.Colour("Name Colour", ConfigurationHandler.NameColourR, ConfigurationHandler.NameColourG, ConfigurationHandler.NameColourB)
-
+            Option.Colour("Name Colour", ConfigurationHandler.NameColourR, ConfigurationHandler.NameColourG, ConfigurationHandler.NameColourB),
+            Option.Bool("Storms Enabled", ConfigurationHandler.ConfigStormsEnabled)
         });
     }
 

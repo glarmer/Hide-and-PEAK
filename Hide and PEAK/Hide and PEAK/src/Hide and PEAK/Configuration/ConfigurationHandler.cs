@@ -3,6 +3,7 @@ using System.IO;
 using BepInEx;
 using BepInEx.Configuration;
 using ExitGames.Client.Photon;
+using Hide_and_PEAK.Patches;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -33,6 +34,8 @@ namespace Hide_and_PEAK.Configuration
         public ConfigEntry<int> NameColourB;
         public ConfigEntry<float> ReachCatchLength;
         public ConfigEntry<float> BaseCatchLength;
+        public ConfigEntry<bool> ConfigStormsEnabled;
+        
 
         public ConfigurationHandler(ConfigFile configFile)
         {
@@ -129,6 +132,14 @@ namespace Hide_and_PEAK.Configuration
             NameColourR.SettingChanged += (_, __) => PushNameColorToPhoton();
             NameColourG.SettingChanged += (_, __) => PushNameColorToPhoton();
             NameColourB.SettingChanged += (_, __) => PushNameColorToPhoton();
+            
+            ConfigStormsEnabled = _config.Bind(
+                "Modifiers",
+                "Storms Enabled",
+                true,
+                "Allows you to enable or disable rain and snow."
+            );
+            Plugin.Log.LogInfo("ConfigurationHandler: Storms Enabled: " + ConfigStormsEnabled.Value);
         }
 
         private void OnMenuKeyChanged(object sender, System.EventArgs e)
