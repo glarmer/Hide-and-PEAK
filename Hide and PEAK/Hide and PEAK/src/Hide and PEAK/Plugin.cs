@@ -101,6 +101,16 @@ public partial class Plugin : BaseUnityPlugin
             ModConfigurationUI.Instance.ToggleMenu();
         }
         
+        if (ConfigurationHandler.ReviveAction.WasPerformedThisFrame())
+        {
+            if (HideAndSeekManager.Instance != null)
+            {
+                Plugin.Log.LogInfo("[Plugin] Reviving character");
+                Character.localCharacter.photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, Character.localCharacter.GetBodypart(BodypartType.Hip).transform.position + Character.localCharacter.transform.up * 1f, false);
+                Character.localCharacter.AddStamina(100);
+            }
+        }
+        
         
         if (Input.GetKeyDown(KeyCode.K) && _soundPlayer != null)
         {

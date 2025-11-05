@@ -16,12 +16,14 @@ namespace Hide_and_PEAK.Configuration
 
         
         public InputAction MenuAction { get; private set; }
+        public InputAction ReviveAction { get; private set; }
         public InputAction FreezeAction { get; private set; }
         public InputAction ScoreBoardAction { get; private set; }
         public InputAction TeamSelectionUIAction { get; private set; }
         
         public ConfigEntry<string> ConfigMenuKey;
         public ConfigEntry<string> ConfigFreezeKey;
+        public ConfigEntry<string> ConfigReviveKey;
         public ConfigEntry<string> ConfigScoreBoardKey;
         public ConfigEntry<string> ConfigTeamSelectionUIKey;
         public ConfigEntry<bool> ConfigSeekerVoice;
@@ -82,6 +84,16 @@ namespace Hide_and_PEAK.Configuration
             Plugin.Log.LogInfo("ConfigurationHandler: Config Team Selection UI Key: " + ConfigTeamSelectionUIKey.Value);
             TeamSelectionUIAction = SetupInputAction(ConfigTeamSelectionUIKey.Value);
             ConfigTeamSelectionUIKey.SettingChanged += OnTeamSelectionUIKeyChanged;
+            
+            ConfigReviveKey = _config.Bind(
+                "General",
+                "Config Revive Key",
+                "<Keyboard>/z",
+                "Button to revive"
+            );
+            Plugin.Log.LogInfo("ConfigurationHandler: Config Revive Key: " + ConfigReviveKey.Value);
+            ReviveAction = SetupInputAction(ConfigReviveKey.Value);
+            ConfigReviveKey.SettingChanged += OnReviveKeyChanged;
             
             
             ConfigSeekerVoice = _config.Bind(
@@ -172,6 +184,12 @@ namespace Hide_and_PEAK.Configuration
             action.AddBinding(binding);
             action.Enable();
             return action;
+        }
+        
+        private void OnReviveKeyChanged(object sender, System.EventArgs e)
+        {
+            ReviveAction?.Dispose();
+            ReviveAction = SetupInputAction(ConfigReviveKey.Value);
         }
 
         public string GetHexColorRGB()
