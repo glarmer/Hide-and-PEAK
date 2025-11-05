@@ -48,13 +48,14 @@ The only official pages for this mod are as follows:
 - GitHub: https://github.com/glarmer/Hide-and-PEAK
 
 ## Commissions
-Did you know I take commissions? Contact me on discord @glarmer if you'd like to discuss! Note: All commissions must go through PayPal for the safety of you as a buyer and me as a seller.
+Did you know I take commissions? Contact me on discord @glarmer if you'd like to discuss! Alternatively reach out to me via my [Discord server](https://discord.gg/cjzWT37abR). Note: All commissions must go through PayPal for the safety of you as a buyer and me as a seller.
 
 ## My other mods
 
 - [PEAK Unlimited](https://thunderstore.io/c/peak/p/glarmer/PEAK_Unlimited/) - Allows you to rebind your keys
 - [Voice Volume Saver](https://thunderstore.io/c/peak/p/glarmer/PEAK_Voice_Volume_Saver/) - Saves the volume of all your friends, no more adjusting their volume every time you load in!
 - [Discplacement](https://thunderstore.io/c/peak/p/glarmer/Discplacement/) - Turns the frisbee into a teleportation device with various balance settings
+- [Badges for Boba's Hats](https://thunderstore.io/c/peak/p/glarmer/Badges_For_Bobas_Hats/) - Adds badges so you can earn boba's hats!
 
 ## Manual Installation
 
@@ -71,4 +72,5 @@ Did you know I take commissions? Contact me on discord @glarmer if you'd like to
 ## Help
 
 * Find your PEAK folder via Steam: **Right-click PEAK -> Manage -> Browse Local Files**.
+* You can get help from myself via my [Discord server](https://discord.gg/cjzWT37abR)!
 * Report problems or request features via the [GitHub repository](https://github.com/glarmer/HideAndPEAK).
