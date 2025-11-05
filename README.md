@@ -55,6 +55,7 @@ Did you know I take commissions? Contact me on discord @glarmer if you'd like to
 - [PEAK Unlimited](https://thunderstore.io/c/peak/p/glarmer/PEAK_Unlimited/) - Allows you to rebind your keys
 - [Voice Volume Saver](https://thunderstore.io/c/peak/p/glarmer/PEAK_Voice_Volume_Saver/) - Saves the volume of all your friends, no more adjusting their volume every time you load in!
 - [Discplacement](https://thunderstore.io/c/peak/p/glarmer/Discplacement/) - Turns the frisbee into a teleportation device with various balance settings
+- [Badges for Boba's Hats](https://thunderstore.io/c/peak/p/glarmer/Badges_For_Bobas_Hats/) - Turns the frisbee into a teleportation device with various balance settings
 
 ## Manual Installation
 
