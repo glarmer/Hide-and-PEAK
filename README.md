@@ -48,7 +48,7 @@ The only official pages for this mod are as follows:
 - GitHub: https://github.com/glarmer/Hide-and-PEAK
 
 ## Commissions
-Did you know I take commissions? Contact me on discord @glarmer if you'd like to discuss! Note: All commissions must go through PayPal for the safety of you as a buyer and me as a seller.
+Did you know I take commissions? Contact me on discord @glarmer if you'd like to discuss! Alternatively reach out to me via my [Discord server](https://discord.gg/cjzWT37abR). Note: All commissions must go through PayPal for the safety of you as a buyer and me as a seller.
 
 ## My other mods
 
@@ -71,4 +71,5 @@ Did you know I take commissions? Contact me on discord @glarmer if you'd like to
 ## Help
 
 * Find your PEAK folder via Steam: **Right-click PEAK -> Manage -> Browse Local Files**.
+* You can get help from myself via my [Discord server](https://discord.gg/cjzWT37abR)!
 * Report problems or request features via the [GitHub repository](https://github.com/glarmer/HideAndPEAK).
