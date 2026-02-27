@@ -12,11 +12,18 @@
         <!-- Ensure modern C# features are available -->
         <LangVersion>latest</LangVersion>
 
-        <!-- Managed directory path -->
-        <ManagedDir>C:\Program Files (x86)\Steam\steamapps\common\PEAK\PEAK_Data\Managed\</ManagedDir>
-
         <!-- Suppress warnings from Unity/BepInEx quirks -->
         <NoWarn>CS0618</NoWarn>
+    </PropertyGroup>
+    
+    <!-- Managed directory path (windows) -->
+    <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+        <ManagedDir>C:\Program Files (x86)\Steam\steamapps\common\PEAK\PEAK_Data\Managed\</ManagedDir>
+    </PropertyGroup>
+
+    <!-- Managed directory path (linux) -->
+    <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+        <ManagedDir>$(HOME)/.local/share/Steam/steamapps/common/PEAK/PEAK_Data/Managed/</ManagedDir>
     </PropertyGroup>
 
     <PropertyGroup>
