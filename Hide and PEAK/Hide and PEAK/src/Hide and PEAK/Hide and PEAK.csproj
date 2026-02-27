@@ -45,9 +45,17 @@
     <ItemGroup>
         <LocalReferences
                 Include="$(ManagedDir)*.dll"
-                Exclude="$(ManagedDir)Mono*.dll;$(ManagedDir)netstandard.dll;$(ManagedDir)System*.dll;$(ManagedDir)mscorlib.dll"/>
+                Exclude="
+        $(ManagedDir)Mono*.dll;
+        $(ManagedDir)netstandard.dll;
+        $(ManagedDir)System*.dll;
+        $(ManagedDir)mscorlib.dll" />
+
         <Reference Include="@(LocalReferences)" Private="false" />
-        <Reference Include="$(ManagedDir)Assembly-CSharp.dll" Private="false" Publicize="true" />
+        <Reference Include="$(ManagedDir)Assembly-CSharp.dll"
+                   Private="false"
+                   Publicize="true" />
+        <LocalReferences Remove="..\..\..\..\..\..\.local\share\Steam\steamapps\common\PEAK\PEAK_Data\Managed\**" />
     </ItemGroup>
 
 </Project>
