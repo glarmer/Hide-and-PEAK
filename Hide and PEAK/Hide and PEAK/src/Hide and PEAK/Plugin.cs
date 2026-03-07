@@ -112,10 +112,10 @@ public partial class Plugin : BaseUnityPlugin
         }
         
         
-        if (Input.GetKeyDown(KeyCode.K) && _soundPlayer != null)
-        {
-            _soundPlayer.PlayRandomSound();
-        }
+        //if (Input.GetKeyDown(KeyCode.K) && _soundPlayer != null)
+        //{
+        //    _soundPlayer.PlayRandomSound();
+        //}
         
         
         if (!_pushedNameColor && PhotonNetwork.InRoom)
