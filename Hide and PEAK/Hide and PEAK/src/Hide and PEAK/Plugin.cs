@@ -103,10 +103,10 @@ public partial class Plugin : BaseUnityPlugin
         
         if (ConfigurationHandler.ReviveAction.WasPerformedThisFrame())
         {
-            if (HideAndSeekManager.Instance != null)
+            if (HideAndSeekManager.Instance != null && HideAndSeekManager.Instance.IsSeeker && (Character.localCharacter.data._dead || Character.localCharacter.data.passedOut) )
             {
-                Plugin.Log.LogInfo("[Plugin] Reviving character");
-                Character.localCharacter.photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, Character.localCharacter.GetBodypart(BodypartType.Hip).transform.position + Character.localCharacter.transform.up * 1f, false);
+                Log.LogInfo("[Plugin] Reviving character");
+                Character.localCharacter.photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, Character.localCharacter.GetBodypart(BodypartType.Hip).transform.position + Character.localCharacter.transform.up * 1f, false, 0);
                 Character.localCharacter.AddStamina(100);
             }
         }
