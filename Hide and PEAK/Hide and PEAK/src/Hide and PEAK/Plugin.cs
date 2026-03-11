@@ -29,6 +29,7 @@ public partial class Plugin : BaseUnityPlugin
     private HideAndSeekManager _manager;
     private RichPresenceService _richPresenceService = null;
     public static Plugin Instance;
+    public Vector3 lastDeathPosition = new Vector3(0f, 0f, 0f);
 
     private RichPresenceState lastState = RichPresenceState.Status_MainMenu;
 
@@ -43,7 +44,7 @@ public partial class Plugin : BaseUnityPlugin
         _harmony.PatchAll(typeof(VoiceObscuranceFilterPatch));
         _harmony.PatchAll(typeof(CharacterMovementUpdatePatch));
         _harmony.PatchAll(typeof(RunManagerStartRunPatch));
-        _harmony.PatchAll(typeof(CharacterDeathPosPatch));
+        _harmony.PatchAll(typeof(CharacterRPCADiePatch));
         _harmony.PatchAll(typeof(WindChillZoneHandleTimePatch));
         
         ConfigurationHandler = new ConfigurationHandler(Config);
@@ -106,7 +107,14 @@ public partial class Plugin : BaseUnityPlugin
             if (HideAndSeekManager.Instance != null && HideAndSeekManager.Instance.IsSeeker && (Character.localCharacter.data._dead || Character.localCharacter.data.passedOut) )
             {
                 Log.LogInfo("[Plugin] Reviving character");
-                Character.localCharacter.photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, Character.localCharacter.GetBodypart(BodypartType.Hip).transform.position + Character.localCharacter.transform.up * 1f, false, 0);
+                if (Character.localCharacter.data._dead)
+                {
+                    Character.localCharacter.photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, lastDeathPosition, false, 0);
+                }
+                else
+                {
+                    Character.localCharacter.photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, Character.localCharacter.GetBodypart(BodypartType.Hip).transform.position + Character.localCharacter.transform.up, false, 0);
+                }
                 Character.localCharacter.AddStamina(100);
             }
         }
