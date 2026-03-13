@@ -13,8 +13,6 @@ namespace Hide_and_PEAK.Configuration
     public class ConfigurationHandler
     {
         private readonly ConfigFile _config;
-
-        
         public InputAction MenuAction { get; private set; }
         public InputAction ReviveAction { get; private set; }
         public InputAction FreezeAction { get; private set; }
@@ -141,9 +139,9 @@ namespace Hide_and_PEAK.Configuration
             NameColourG = _config.Bind("Visual", "Name Colour G", 170, new ConfigDescription("Name colour green (0-255)", new AcceptableValueRange<int>(0, 255)));
             NameColourB = _config.Bind("Visual", "Name Colour B", 255, new ConfigDescription("Name colour blue (0-255)", new AcceptableValueRange<int>(0, 255)));
 
-            NameColourR.SettingChanged += (_, __) => PushNameColorToPhoton();
-            NameColourG.SettingChanged += (_, __) => PushNameColorToPhoton();
-            NameColourB.SettingChanged += (_, __) => PushNameColorToPhoton();
+            NameColourR.SettingChanged += (_, __) => PushNameColourToPhoton();
+            NameColourG.SettingChanged += (_, __) => PushNameColourToPhoton();
+            NameColourB.SettingChanged += (_, __) => PushNameColourToPhoton();
             
             ConfigStormsEnabled = _config.Bind(
                 "Modifiers",
@@ -154,25 +152,25 @@ namespace Hide_and_PEAK.Configuration
             Plugin.Log.LogInfo("ConfigurationHandler: Storms Enabled: " + ConfigStormsEnabled.Value);
         }
 
-        private void OnMenuKeyChanged(object sender, System.EventArgs e)
+        private void OnMenuKeyChanged(object sender, EventArgs e)
         {
             MenuAction?.Dispose();
             MenuAction = SetupInputAction(ConfigMenuKey.Value);
         }
 
-        private void OnFreezeKeyChanged(object sender, System.EventArgs e)
+        private void OnFreezeKeyChanged(object sender, EventArgs e)
         {
             FreezeAction?.Dispose();
             FreezeAction = SetupInputAction(ConfigFreezeKey.Value);
         }
         
-        private void OnTeamSelectionUIKeyChanged(object sender, System.EventArgs e)
+        private void OnTeamSelectionUIKeyChanged(object sender, EventArgs e)
         {
             TeamSelectionUIAction?.Dispose();
             TeamSelectionUIAction = SetupInputAction(ConfigTeamSelectionUIKey.Value);
         }
 
-        private void OnScoreBoardKeyChanged(object sender, System.EventArgs e)
+        private void OnScoreBoardKeyChanged(object sender, EventArgs e)
         {
             ScoreBoardAction?.Dispose();
             ScoreBoardAction = SetupInputAction(ConfigScoreBoardKey.Value);
@@ -186,13 +184,13 @@ namespace Hide_and_PEAK.Configuration
             return action;
         }
         
-        private void OnReviveKeyChanged(object sender, System.EventArgs e)
+        private void OnReviveKeyChanged(object sender, EventArgs e)
         {
             ReviveAction?.Dispose();
             ReviveAction = SetupInputAction(ConfigReviveKey.Value);
         }
 
-        public string GetHexColorRGB()
+        public string GetHexColourRGB()
         {
             int r = Mathf.Clamp(NameColourR.Value, 0, 255);
             int g = Mathf.Clamp(NameColourG.Value, 0, 255);
@@ -200,19 +198,19 @@ namespace Hide_and_PEAK.Configuration
             return r.ToString("X2") + g.ToString("X2") + b.ToString("X2");
         }
 
-        public void PushNameColorToPhoton()
+        public void PushNameColourToPhoton()
         {
             try
             {
                 if (!PhotonNetwork.InRoom || PhotonNetwork.LocalPlayer == null) return;
-                var hex = GetHexColorRGB();
-                Hashtable props = new Hashtable { { "NameColor", hex } };
+                var hex = GetHexColourRGB();
+                Hashtable props = new Hashtable { { "NameColour", hex } };
                 PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-                Plugin.Log.LogInfo($"[Config] Updated NameColor to #{hex}");
+                Plugin.Log.LogInfo($"[Config] Updated NameColour to #{hex}");
             }
             catch (Exception e)
             {
-                Plugin.Log.LogError($"[Config] Failed to update NameColor: {e}");
+                Plugin.Log.LogError($"[Config] Failed to update NameColour: {e}");
             }
         }
     }

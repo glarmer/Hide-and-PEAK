@@ -596,7 +596,7 @@ public class HideAndSeekManager : MonoBehaviourPunCallbacks
     {
         Plugin.Log.LogInfo("[HideAndSeekManager] Initializing new game...");
 
-        try { Plugin.ConfigurationHandler?.PushNameColorToPhoton(); } catch {}
+        Plugin.ConfigurationHandler?.PushNameColourToPhoton();
 
         if (TeamSelectionUI.Instance != null)
         {
