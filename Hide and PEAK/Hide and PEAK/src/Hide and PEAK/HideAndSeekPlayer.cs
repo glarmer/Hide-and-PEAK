@@ -17,6 +17,40 @@ public class HideAndSeekPlayer : MonoBehaviour
     public bool IsSeeker => PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Team", out var teamObj) && (Team)teamObj == Team.Seeker;
 
     private Camera MainCamera = Camera.main;
+    
+    void Start()
+    {
+        GlobalEvents.OnCharacterDied += OnCharacterDied;
+    }
+
+    void OnDestroy()
+    {
+        GlobalEvents.OnCharacterDied -= OnCharacterDied;
+    }
+    
+    private void OnCharacterDied(Character character)
+    {
+        if (Character.localCharacter == null || Character.localCharacter.refs == null || !HideAndSeekManager.Instance.IsGameActive)
+            return;
+        
+        Plugin.Log.LogInfo($"Death event for {character.name}");
+        
+        if (character.characterName.Equals(Character.localCharacter.characterName) && (Character.localCharacter.data.dead || Character.localCharacter.refs.customization.isDead))
+        {
+            Plugin.Log.LogInfo($"[HideAndSeekPlayer] Player is dead, reviving them and (if hider) switching to seeker");
+            Team team = IsHider ? Team.Seeker : Team.Hider;
+            Hashtable props = new Hashtable
+            {
+                { "Team", Team.Seeker },
+                { "OriginalRole", team },
+                { "Caught_Time", PlayerStats.Instance._currentTimeString },
+                { "Catches", 0 }
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            DeathLog.Instance.AddWorldDeath(Character.localCharacter.view);
+            Plugin.Log.LogInfo($"[HideAndSeekPlayer] Switched local player to seeker");
+        }
+    }
 
     private void Update()
     {
@@ -37,21 +71,7 @@ public class HideAndSeekPlayer : MonoBehaviour
             TryRaycastConeCatch(0.9f, 35);
         } 
 
-        if (Character.localCharacter.data.dead || Character.localCharacter.refs.customization.isDead)
-        {
-            Plugin.Log.LogInfo($"[HideAndSeekPlayer] Hider is dead, reviving them and switching to seeker");
-            Team team = IsHider ? Team.Seeker : Team.Hider;
-            Hashtable props = new Hashtable
-            {
-                { "Team", Team.Seeker },
-                { "OriginalRole", team },
-                { "Caught_Time", PlayerStats.Instance._currentTimeString },
-                { "Catches", 0 }
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-            DeathLog.Instance.AddWorldDeath(Character.localCharacter.view);
-            Plugin.Log.LogInfo($"[HideAndSeekPlayer] Switched local player to seeker");
-        }
+        
     }
 
     private void TryRaycastConeCatch(float distance, float spreadAngle)

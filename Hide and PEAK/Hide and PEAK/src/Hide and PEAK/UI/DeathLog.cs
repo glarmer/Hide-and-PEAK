@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using HideAndSeekMod;
 using Photon.Pun;
 using TMPro;
@@ -10,36 +11,30 @@ namespace Hide_and_PEAK.UI;
 public class DeathLog : MonoBehaviour
 {
     private TMP_Text _text;
+
     public static DeathLog Instance;
-    
+
     private readonly List<(string message, float expires)> _deaths = new();
+    private readonly StringBuilder _sb = new(256);
+
+    private const float Lifetime = 5f;
 
     private void Start()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-        } else
-        {
-            Plugin.Log.LogWarning("[DeathLog] Instance already exists, destroying old one.");
-            Destroy(Instance);
-            Instance = this;
-            return;
+            Plugin.Log.LogWarning("[DeathLog] Instance already exists, replacing.");
+            Destroy(Instance.gameObject);
         }
+
+        Instance = this;
+
         _text = GetComponent<TMP_Text>();
         if (_text == null)
         {
-            var tmpUgui = GetComponent<TextMeshProUGUI>();
-            if (tmpUgui != null)
-            {
-                _text = tmpUgui;
-            }
-            else
-            {
-                Plugin.Log.LogError("[DeathLog] No TMP_Text/TextMeshProUGUI found on object!");
-                enabled = false;
-                return;
-            }
+            Plugin.Log.LogError("[DeathLog] No TMP_Text found!");
+            enabled = false;
+            return;
         }
 
         _text.autoSizeTextContainer = true;
@@ -58,115 +53,156 @@ public class DeathLog : MonoBehaviour
     {
         if (_text == null) return;
 
-        var sb = new System.Text.StringBuilder();
-        
-        sb.Append("\n ");
-        sb.Append("\n ");
+        _sb.Clear();
 
-        for (var i = _deaths.Count - 1; i >= 0; i--)
+        _sb.Append("\n ");
+        _sb.Append("\n ");
+
+        float now = Time.time;
+
+        for (int i = _deaths.Count - 1; i >= 0; i--)
         {
             var (message, expires) = _deaths[i];
-            var remaining = expires - Time.time;
-            
-            if (remaining <= 0)
+
+            float remaining = expires - now;
+
+            if (remaining <= 0f)
             {
                 _deaths.RemoveAt(i);
                 continue;
             }
 
-            var t = Mathf.Clamp01(remaining / 5f);
-            var alpha = Mathf.RoundToInt(t * 255);
-            
-            string fadedMessage = message.Replace("{alpha}", alpha.ToString("X2"));
+            float t = Mathf.Clamp01(remaining / Lifetime);
+            int alpha = Mathf.RoundToInt(t * 255);
 
-            sb.Append(fadedMessage).Append('\n');
+            _sb.Append(message.Replace("{alpha}", alpha.ToString("X2")));
+            _sb.Append('\n');
         }
 
-        _text.text = sb.ToString();
+        _text.text = _sb.ToString();
     }
 
     public void AddDeath(PhotonView seeker, PhotonView hider)
     {
         Plugin.Log.LogInfo("[DeathLog] Adding death");
-        
+
         string seekerHex = "FF5555";
         string hiderHex = "55AAFF";
-        if (seeker.Owner != null && seeker.Owner.CustomProperties.TryGetValue("NameColor", out var sHex)) seekerHex = (string)sHex;
-        if (hider.Owner != null && hider.Owner.CustomProperties.TryGetValue("NameColor", out var hHex)) hiderHex = (string)hHex;
-        var seekerName = $"<color=#{seekerHex}{{alpha}}>{seeker.Owner.NickName}</color>";
-        var hiderName  = $"<color=#{hiderHex}{{alpha}}>{hider.Owner.NickName}</color>";
-        
+
+        if (seeker.Owner != null && seeker.Owner.CustomProperties.TryGetValue("NameColor", out var sHex))
+            seekerHex = (string)sHex;
+
+        if (hider.Owner != null && hider.Owner.CustomProperties.TryGetValue("NameColor", out var hHex))
+            hiderHex = (string)hHex;
+
+        string seekerName = FilterName(seeker.Owner?.NickName);
+        string hiderName = FilterName(hider.Owner?.NickName);
+
+        var seekerTag = $"<color=#{seekerHex}{{alpha}}>{seekerName}</color>";
+        var hiderTag = $"<color=#{hiderHex}{{alpha}}>{hiderName}</color>";
+
         var middle = $"<color=#FFFFFF{{alpha}}> found </color>";
 
-        var death = $"{seekerName}{middle}{hiderName}";
-        var displayUntil = Time.time + 5f;
+        var death = $"{seekerTag}{middle}{hiderTag}";
 
-        _deaths.Add((death, displayUntil));
+        _deaths.Add((death, Time.time + Lifetime));
+
         Plugin.Log.LogInfo("[DeathLog] Death added");
     }
-    
+
     public void AddWorldDeath(PhotonView hider)
     {
-        Plugin.Log.LogInfo("[DeathLog] Adding death");
-        
+        Plugin.Log.LogInfo("[DeathLog] Adding world death");
+
         string seekerHex = "FFFFFF";
         string hiderHex = "55AAFF";
-        if (hider.Owner != null && hider.Owner.CustomProperties.TryGetValue("NameColor", out var hHex)) hiderHex = (string)hHex;
-        var seekerName = $"<color=#{seekerHex}{{alpha}}>Death</color>";
-        var hiderName  = $"<color=#{hiderHex}{{alpha}}>{hider.Owner.NickName}</color>";
-        
+
+        if (hider.Owner != null && hider.Owner.CustomProperties.TryGetValue("NameColor", out var hHex))
+            hiderHex = (string)hHex;
+
+        string hiderName = FilterName(hider.Owner?.NickName);
+
+        var seekerTag = $"<color=#{seekerHex}{{alpha}}>Death</color>";
+        var hiderTag = $"<color=#{hiderHex}{{alpha}}>{hiderName}</color>";
+
         var middle = $"<color=#FFFFFF{{alpha}}> found </color>";
 
-        var death = $"{seekerName}{middle}{hiderName}";
-        var displayUntil = Time.time + 5f;
+        var death = $"{seekerTag}{middle}{hiderTag}";
 
-        _deaths.Add((death, displayUntil));
+        _deaths.Add((death, Time.time + Lifetime));
+
         Plugin.Log.LogInfo("[DeathLog] Death added");
+    }
+
+    private string FilterName(string input)
+    {
+        if (string.IsNullOrEmpty(input) || _text?.font == null)
+            return "Unknown";
+
+        input = input.Replace("<", "").Replace(">", "");
+
+        TMP_FontAsset font = _text.font;
+        var sb = new StringBuilder(input.Length);
+
+        foreach (char c in input)
+        {
+            if (font.HasCharacter(c))
+                sb.Append(c);
+        }
+
+        return sb.Length > 0 ? sb.ToString() : "Unknown";
     }
 
     public static void InitiateDeathLog()
     {
-        if (Instance == null)
-        {
-            var ascentUI = FindAnyObjectByType<AscentUI>();
-            if (ascentUI == null)
-            {
-                Plugin.Log.LogError("[DeathLog] Could not find AscentUI parent to attach!");
-                return;
-            }
-            
-            var go = new GameObject("DeathLog UI", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
-            var rt = go.GetComponent<RectTransform>();
-            rt.SetParent(ascentUI.transform.parent, false);
-            rt.localScale = Vector3.one;
-            rt.anchorMin = rt.anchorMax = new Vector2(1f, 1f);
-            rt.pivot = new Vector2(1f, 1f);
-            rt.anchoredPosition = new Vector2(-16f, -16f);
-            rt.sizeDelta = new Vector2(600f, 200f);
-            
-            var ascentText = ascentUI.GetComponent<TMP_Text>();
-            if (ascentText != null && ascentText.font != null)
-            {
-                var ourText = go.GetComponent<TextMeshProUGUI>();
-                if (ourText != null)
-                {
-                    ourText.font = ascentText.font;
-                    Plugin.Log.LogInfo($"[DeathLog] Copied font from AscentUI: {ascentText.font.name}");
-                }
-            }
-            else
-            {
-                Plugin.Log.LogWarning("[DeathLog] Could not find font on AscentUI, using default");
-            }
-
-            go.AddComponent<DeathLog>();
-            rt.SetAsLastSibling();
-        }
-        else
+        if (Instance != null)
         {
             Destroy(Instance.gameObject);
             Instance = null;
-            InitiateDeathLog();
         }
+
+        var ascentUI = FindAnyObjectByType<AscentUI>();
+
+        if (ascentUI == null)
+        {
+            Plugin.Log.LogError("[DeathLog] Could not find AscentUI parent!");
+            return;
+        }
+
+        var go = new GameObject(
+            "DeathLog UI",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(TextMeshProUGUI)
+        );
+
+        var rt = go.GetComponent<RectTransform>();
+
+        rt.SetParent(ascentUI.transform.parent, false);
+        rt.localScale = Vector3.one;
+
+        rt.anchorMin = rt.anchorMax = new Vector2(1f, 1f);
+        rt.pivot = new Vector2(1f, 1f);
+
+        rt.anchoredPosition = new Vector2(-16f, -16f);
+        rt.sizeDelta = new Vector2(600f, 200f);
+
+        var ascentText = ascentUI.GetComponent<TMP_Text>();
+
+        if (ascentText != null && ascentText.font != null)
+        {
+            var ourText = go.GetComponent<TextMeshProUGUI>();
+            ourText.font = ascentText.font;
+
+            Plugin.Log.LogInfo($"[DeathLog] Copied font from AscentUI: {ascentText.font.name}");
+        }
+        else
+        {
+            Plugin.Log.LogWarning("[DeathLog] Could not find font on AscentUI, using default");
+        }
+
+        go.AddComponent<DeathLog>();
+
+        rt.SetAsLastSibling();
     }
 }
