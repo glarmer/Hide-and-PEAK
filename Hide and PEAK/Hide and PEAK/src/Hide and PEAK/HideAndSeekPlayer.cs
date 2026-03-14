@@ -37,19 +37,33 @@ public class HideAndSeekPlayer : MonoBehaviour
         
         if (character.characterName.Equals(Character.localCharacter.characterName) && (Character.localCharacter.data.dead || Character.localCharacter.refs.customization.isDead))
         {
-            Plugin.Log.LogInfo($"[HideAndSeekPlayer] Player is dead, reviving them and (if hider) switching to seeker");
-            Team team = IsHider ? Team.Seeker : Team.Hider;
-            Hashtable props = new Hashtable
-            {
-                { "Team", Team.Seeker },
-                { "OriginalRole", team },
-                { "Caught_Time", PlayerStats.Instance._currentTimeString },
-                { "Catches", 0 }
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            Plugin.Log.LogInfo($"[HideAndSeekPlayer] Local Character is dead :(");
             DeathLog.Instance.AddWorldDeath(Character.localCharacter.view);
-            Plugin.Log.LogInfo($"[HideAndSeekPlayer] Switched local player to seeker");
+            
+            if (IsHider)
+            {
+                Plugin.Log.LogInfo($"[HideAndSeekPlayer] Local Character was a hider, reviving as seeker...");
+                Hashtable props = new Hashtable
+                {
+                    { "Team", Team.Seeker },
+                    { "OriginalRole", Team.Hider },
+                    { "Caught_Time", PlayerStats.Instance._currentTimeString },
+                    { "Catches", 0 }
+                };
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                
+                Character.localCharacter.photonView.RPC("RPCA_ReviveAtPosition", RpcTarget.All, Plugin.Instance.lastDeathPosition, false, 0);
+                Character.localCharacter.AddStamina(100);
+                Character.localCharacter.AddIllegalStatus("BLIND", 10);
+                Plugin.Log.LogInfo($"[HideAndSeekPlayer] Switched local player to seeker, revived them and applied blind!");
+            }
         }
+        
+        if (HideAndSeekManager.Instance.IsHost())
+        {
+            StartCoroutine(HideAndSeekManager.Instance.CheckGameEndAfterDelay(0.5f));
+        }
+        
     }
 
     private void Update()

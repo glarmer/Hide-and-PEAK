@@ -294,7 +294,7 @@ public class HideAndSeekManager : MonoBehaviourPunCallbacks
         _processingCaught.Remove(viewId);
     }
 
-    private IEnumerator CheckGameEndAfterDelay(float delay)
+    public IEnumerator CheckGameEndAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         CheckForGameEnd();

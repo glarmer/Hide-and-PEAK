@@ -16,8 +16,8 @@ public class CharacterRPCADiePatch
         {
             Plugin.Log.LogInfo($"RPCA_Die Patch: Saving death position...");
             Plugin.Instance.lastDeathPosition =
-                Character.localCharacter.GetBodypart(BodypartType.Hip).transform.position +
-                Character.localCharacter.transform.up;
+                Character.localCharacter.GetBodypart(BodypartType.Torso).transform.position +
+                Vector3.up * 2.5f;
             Plugin.Log.LogInfo($"RPCA_Die Patch: Death position saved as " + Plugin.Instance.lastDeathPosition);
         }
 
