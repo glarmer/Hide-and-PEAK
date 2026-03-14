@@ -128,7 +128,7 @@ public partial class Plugin : BaseUnityPlugin
         
         if (!_pushedNameColor && PhotonNetwork.InRoom)
         {
-            try { ConfigurationHandler?.PushNameColorToPhoton(); } catch {}
+            try { ConfigurationHandler?.PushNameColourToPhoton(); } catch {}
             _pushedNameColor = true;
         }
     }
@@ -151,7 +151,7 @@ public partial class Plugin : BaseUnityPlugin
             }
         }
 
-        ConfigurationHandler.PushNameColorToPhoton();
+        ConfigurationHandler.PushNameColourToPhoton();
 
         
         _teamSelectionUI = new GameObject("Team Selection UI");
