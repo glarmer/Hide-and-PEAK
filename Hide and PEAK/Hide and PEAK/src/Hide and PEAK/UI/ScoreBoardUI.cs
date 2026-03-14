@@ -128,11 +128,21 @@ namespace Hide_and_PEAK.UI
 
         private Texture2D MakeTex(int width, int height, Color col)
         {
+            if (SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Vulkan)
+                col = col.linear;
+
+            Texture2D result = new Texture2D(width, height, TextureFormat.RGBA32, false);
+
             Color[] pix = new Color[width * height];
-            for (int i = 0; i < pix.Length; i++) pix[i] = col;
-            Texture2D result = new Texture2D(width, height);
+            for (int i = 0; i < pix.Length; i++)
+                pix[i] = col;
+
             result.SetPixels(pix);
             result.Apply();
+
+            result.filterMode = FilterMode.Point;
+            result.wrapMode = TextureWrapMode.Clamp;
+
             return result;
         }
 
