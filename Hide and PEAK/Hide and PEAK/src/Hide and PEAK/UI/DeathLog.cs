@@ -89,10 +89,10 @@ public class DeathLog : MonoBehaviour
         string seekerHex = "FF5555";
         string hiderHex = "55AAFF";
 
-        if (seeker.Owner != null && seeker.Owner.CustomProperties.TryGetValue("NameColor", out var sHex))
+        if (seeker.Owner != null && seeker.Owner.CustomProperties.TryGetValue("NameColour", out var sHex))
             seekerHex = (string)sHex;
 
-        if (hider.Owner != null && hider.Owner.CustomProperties.TryGetValue("NameColor", out var hHex))
+        if (hider.Owner != null && hider.Owner.CustomProperties.TryGetValue("NameColour", out var hHex))
             hiderHex = (string)hHex;
 
         string seekerName = FilterName(seeker.Owner?.NickName);
@@ -117,7 +117,7 @@ public class DeathLog : MonoBehaviour
         string seekerHex = "FFFFFF";
         string hiderHex = "55AAFF";
 
-        if (hider.Owner != null && hider.Owner.CustomProperties.TryGetValue("NameColor", out var hHex))
+        if (hider.Owner != null && hider.Owner.CustomProperties.TryGetValue("NameColour", out var hHex))
             hiderHex = (string)hHex;
 
         string hiderName = FilterName(hider.Owner?.NickName);

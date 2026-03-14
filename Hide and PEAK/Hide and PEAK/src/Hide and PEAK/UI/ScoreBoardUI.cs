@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ExitGames.Client.Photon;
 using HideAndSeekMod;
 using Photon.Pun;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace Hide_and_PEAK.UI
         public bool isGameOverMode = false;
         public float gameOverCountdown = 0f;
 
-        private int _currentMatchIndex = -1; 
+        private int _currentMatchIndex = -1;
 
         private GUIStyle panelStyle;
         private GUIStyle headerStyle;
@@ -42,6 +41,7 @@ namespace Hide_and_PEAK.UI
                 Instance = this;
                 return;
             }
+
             DontDestroyOnLoad(gameObject);
             StartClosed();
             Plugin.Log.LogInfo("[ScoreBoardUI] Awake: Scoreboard UI initialized.");
@@ -64,6 +64,7 @@ namespace Hide_and_PEAK.UI
         public void SetScoreBoardUI(bool visible)
         {
             showUI = visible;
+
             if (visible)
                 base.Open();
             else
@@ -78,72 +79,15 @@ namespace Hide_and_PEAK.UI
 
         private void CreateGUIStyles()
         {
-            Font unicodeFont = Resources.Load<Font>("Fonts/NotoSans-Regular");
+            panelStyle = UIHelper.CreatePanelStyle();
 
-            panelStyle = new GUIStyle(GUI.skin.box)
-            {
-                font = unicodeFont,
-                normal = { background = MakeTex(4, 4, new Color(0.12f, 0.12f, 0.12f, 0.85f)) },
-                border = new RectOffset(12, 12, 12, 12),
-                padding = new RectOffset(15, 15, 15, 15)
-            };
+            headerStyle = UIHelper.CreateLabelStyle(28, TextAnchor.MiddleCenter, true);
 
-            headerStyle = new GUIStyle(GUI.skin.label)
-            {
-                font = unicodeFont,
-                fontSize = 28,
-                fontStyle = FontStyle.Bold,
-                normal = { textColor = Color.white },
-                alignment = TextAnchor.MiddleCenter
-            };
+            teamHeaderStyle = UIHelper.CreateLabelStyle(18, TextAnchor.MiddleLeft, true);
 
-            teamHeaderStyle = new GUIStyle(GUI.skin.label)
-            {
-                font = unicodeFont,
-                fontSize = 18,
-                fontStyle = FontStyle.Bold,
-                normal = { textColor = Color.white },
-                alignment = TextAnchor.MiddleLeft
-            };
+            playerStyle = UIHelper.CreateLabelStyle(16, TextAnchor.MiddleLeft, true);
 
-            playerStyle = new GUIStyle(GUI.skin.label)
-            {
-                font = unicodeFont,
-                fontSize = 16,
-                fontStyle = FontStyle.Bold,
-                normal = { textColor = new Color(0.9f, 0.9f, 0.9f) },
-                alignment = TextAnchor.MiddleLeft,
-                richText = true
-            };
-
-            buttonStyle = new GUIStyle(GUI.skin.label)
-            {
-                font = unicodeFont,
-                fontSize = 16,
-                alignment = TextAnchor.MiddleCenter,
-                normal = { textColor = Color.white },
-                hover = { textColor = Color.white },
-            };
-        }
-
-        private Texture2D MakeTex(int width, int height, Color col)
-        {
-            if (SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Vulkan)
-                col = col.linear;
-
-            Texture2D result = new Texture2D(width, height, TextureFormat.RGBA32, false);
-
-            Color[] pix = new Color[width * height];
-            for (int i = 0; i < pix.Length; i++)
-                pix[i] = col;
-
-            result.SetPixels(pix);
-            result.Apply();
-
-            result.filterMode = FilterMode.Point;
-            result.wrapMode = TextureWrapMode.Clamp;
-
-            return result;
+            buttonStyle = UIHelper.CreateLabelStyle(16, TextAnchor.MiddleCenter);
         }
 
         private void DrawScoreBoard()
@@ -175,6 +119,7 @@ namespace Hide_and_PEAK.UI
             string rightText = isGameOverMode
                 ? $"Restarting: {Mathf.CeilToInt(gameOverCountdown)}s"
                 : (_currentMatchIndex >= 0 ? "" : $"Time: {elapsedTime}");
+
             Vector2 timeSize = headerStyle.CalcSize(new GUIContent(rightText));
             Rect timeRect = new Rect(panelWidth - timeSize.x - 10, 0, timeSize.x, headerHeight * 0.6f);
             GUI.Label(timeRect, rightText, headerStyle);
@@ -182,15 +127,19 @@ namespace Hide_and_PEAK.UI
             GUILayout.Space(headerHeight * 0.65f);
 
             scrollPos = GUILayout.BeginScrollView(scrollPos, GUILayout.ExpandHeight(true));
+
             float rowHeight = panelHeight * 0.05f;
 
-            
             GUILayout.BeginHorizontal();
+
             if (DrawFlatButton("< Previous", new Color(0.25f, 0.5f, 1f)))
                 ShowPreviousMatch();
+
             GUILayout.FlexibleSpace();
+
             if (DrawFlatButton("Next >", new Color(1f, 0.55f, 0.2f)))
                 ShowNextMatch();
+
             GUILayout.EndHorizontal();
 
             if (_currentMatchIndex >= 0 && _currentMatchIndex < MatchHistoryManager.Matches.Count)
@@ -211,12 +160,13 @@ namespace Hide_and_PEAK.UI
             Vector2 size = buttonStyle.CalcSize(new GUIContent(text));
             Rect rect = GUILayoutUtility.GetRect(size.x + 20, size.y + 8);
 
-            
             Color drawColor = baseColor;
+
             if (rect.Contains(Event.current.mousePosition))
                 drawColor *= 1.2f;
 
-            GUI.DrawTexture(rect, MakeTex((int)rect.width, (int)rect.height, drawColor));
+            UIHelper.DrawBackground(rect, drawColor);
+
             GUI.Label(rect, text, buttonStyle);
 
             return GUI.Button(rect, GUIContent.none, GUIStyle.none);
@@ -225,6 +175,7 @@ namespace Hide_and_PEAK.UI
         private void DrawMatch(MatchResult match, float rowHeight)
         {
             DrawTeamHeaderFromHistory(match.PlayerResults, Team.Hider);
+
             foreach (var player in match.PlayerResults)
             {
                 if (player.Team == Team.Hider)
@@ -232,6 +183,7 @@ namespace Hide_and_PEAK.UI
             }
 
             DrawTeamHeaderFromHistory(match.PlayerResults, Team.Seeker);
+
             foreach (var player in match.PlayerResults)
             {
                 if (player.Team == Team.Seeker)
@@ -247,28 +199,40 @@ namespace Hide_and_PEAK.UI
             foreach (var player in players)
             {
                 if (player.Team == team) teamCount++;
-                if (team == Team.Hider && player.OriginalRole == Team.Hider && player.Team != Team.Hider)
+
+                if (team == Team.Hider &&
+                    player.OriginalRole == Team.Hider &&
+                    player.Team != Team.Hider)
+                {
                     formerHiders++;
+                }
             }
 
             string label = team == Team.Hider
                 ? $"Hiders ({teamCount}) | Former Hiders: {formerHiders}"
                 : $"Seekers ({teamCount})";
 
-            Color headerColor = team == Team.Hider
+            Color headerColour = team == Team.Hider
                 ? new Color(0.25f, 0.5f, 1f, 0.3f)
                 : new Color(1f, 0.55f, 0.2f, 0.3f);
 
-            Rect rect = GUILayoutUtility.GetRect(new GUIContent(label), teamHeaderStyle,
-                GUILayout.ExpandWidth(true), GUILayout.Height(30));
+            Rect rect = GUILayoutUtility.GetRect(
+                new GUIContent(label),
+                teamHeaderStyle,
+                GUILayout.ExpandWidth(true),
+                GUILayout.Height(30));
 
-            GUI.DrawTexture(rect, MakeTex(1, 1, headerColor));
-            GUI.Label(new Rect(rect.x + 8, rect.y, rect.width - 16, rect.height), label, teamHeaderStyle);
+            UIHelper.DrawBackground(rect, headerColour);
+
+            GUI.Label(new Rect(rect.x + 8, rect.y, rect.width - 16, rect.height),
+                label,
+                teamHeaderStyle);
         }
 
         private void DrawLiveGame(float rowHeight)
         {
             DrawTeamHeader(Team.Hider);
+
             foreach (var player in PhotonNetwork.PlayerList)
             {
                 if (player.CustomProperties.TryGetValue("Team", out var teamObj) && (Team)teamObj == Team.Hider)
@@ -276,6 +240,7 @@ namespace Hide_and_PEAK.UI
             }
 
             DrawTeamHeader(Team.Seeker);
+
             foreach (var player in PhotonNetwork.PlayerList)
             {
                 if (player.CustomProperties.TryGetValue("Team", out var teamObj) && (Team)teamObj == Team.Seeker)
@@ -286,21 +251,27 @@ namespace Hide_and_PEAK.UI
         private void ShowPreviousMatch()
         {
             if (MatchHistoryManager.Matches.Count == 0) return;
-            if (_currentMatchIndex == -1) _currentMatchIndex = MatchHistoryManager.Matches.Count;
+
+            if (_currentMatchIndex == -1)
+                _currentMatchIndex = MatchHistoryManager.Matches.Count;
+
             _currentMatchIndex = Mathf.Max(0, _currentMatchIndex - 1);
         }
 
         private void ShowNextMatch()
         {
             if (_currentMatchIndex == -1) return;
+
             _currentMatchIndex++;
-            if (_currentMatchIndex >= MatchHistoryManager.Matches.Count) _currentMatchIndex = -1;
+
+            if (_currentMatchIndex >= MatchHistoryManager.Matches.Count)
+                _currentMatchIndex = -1;
         }
 
         private void DrawPlayerRowFromHistory(PlayerResult player, float rowHeight)
         {
-            string coloredName = $"<color=#FFFFFF>{player.PlayerName}</color>";
-            string label = coloredName;
+            string colouredName = $"<color=#FFFFFF>{player.PlayerName}</color>";
+            string label = colouredName;
 
             if (player.OriginalRole != player.Team)
                 label += $" | Original: {player.OriginalRole}";
@@ -311,12 +282,19 @@ namespace Hide_and_PEAK.UI
             if (player.Team == Team.Seeker)
                 label += $" | Catches: {player.Catches}";
 
-            Color rowColor = new Color(0.25f, 0.25f, 0.3f, 0.5f);
-            Rect rowRect = GUILayoutUtility.GetRect(new GUIContent(label), playerStyle,
-                GUILayout.ExpandWidth(true), GUILayout.Height(rowHeight));
+            Color rowColour = new Color(0.25f, 0.25f, 0.3f, 0.5f);
 
-            GUI.DrawTexture(rowRect, MakeTex(1, 1, rowColor));
-            GUI.Label(new Rect(rowRect.x + 8, rowRect.y, rowRect.width - 16, rowRect.height), label, playerStyle);
+            Rect rowRect = GUILayoutUtility.GetRect(
+                new GUIContent(label),
+                playerStyle,
+                GUILayout.ExpandWidth(true),
+                GUILayout.Height(rowHeight));
+
+            UIHelper.DrawBackground(rowRect, rowColour);
+
+            GUI.Label(new Rect(rowRect.x + 8, rowRect.y, rowRect.width - 16, rowRect.height),
+                label,
+                playerStyle);
         }
 
         private void DrawTeamHeader(Team team)
@@ -328,7 +306,8 @@ namespace Hide_and_PEAK.UI
             {
                 if (player.CustomProperties.TryGetValue("Team", out var teamObj))
                 {
-                    if ((Team)teamObj == team) teamCount++;
+                    if ((Team)teamObj == team)
+                        teamCount++;
                 }
 
                 if (team == Team.Hider &&
@@ -345,48 +324,64 @@ namespace Hide_and_PEAK.UI
                 ? $"Hiders ({teamCount}) | Former Hiders: {formerHiders}"
                 : $"Seekers ({teamCount})";
 
-            Color headerColor = team == Team.Hider
+            Color headerColour = team == Team.Hider
                 ? new Color(0.25f, 0.5f, 1f, 0.3f)
                 : new Color(1f, 0.55f, 0.2f, 0.3f);
 
-            Rect rect = GUILayoutUtility.GetRect(new GUIContent(label), teamHeaderStyle,
-                GUILayout.ExpandWidth(true), GUILayout.Height(30));
+            Rect rect = GUILayoutUtility.GetRect(
+                new GUIContent(label),
+                teamHeaderStyle,
+                GUILayout.ExpandWidth(true),
+                GUILayout.Height(30));
 
-            GUI.DrawTexture(rect, MakeTex(1, 1, headerColor));
-            GUI.Label(new Rect(rect.x + 8, rect.y, rect.width - 16, rect.height), label, teamHeaderStyle);
+            UIHelper.DrawBackground(rect, headerColour);
+
+            GUI.Label(new Rect(rect.x + 8, rect.y, rect.width - 16, rect.height),
+                label,
+                teamHeaderStyle);
         }
 
         private void DrawPlayerRow(Photon.Realtime.Player player, Team team, float rowHeight)
         {
             Team currentTeam = team;
             Team originalRole = currentTeam;
+
             if (player.CustomProperties.TryGetValue("OriginalRole", out var original))
-            {
                 originalRole = (Team)original;
-            }
 
             string caughtTime = player.CustomProperties.TryGetValue("Caught_Time", out var ct) ? (string)ct : "";
             int catchesValue = player.CustomProperties.TryGetValue("Catches", out var catches) ? (int)catches : 0;
 
-            string nameColor = "FFFFFF";
-            if (player.CustomProperties.TryGetValue("NameColor", out var colHex) && colHex is string hexStr && hexStr.Length >= 6)
-                nameColor = hexStr.Substring(0, 6);
-            string coloredName = $"<color=#{nameColor}>{player.NickName}</color>";
-            string label = coloredName + (player.IsLocal ? " (You)" : "");
+            string nameColour = "FFFFFF";
+            if (player.CustomProperties.TryGetValue("NameColour", out var colHex) && colHex is string hexStr && hexStr.Length >= 6)
+                nameColour = hexStr.Substring(0, 6);
+
+            string colouredName = $"<color=#{nameColour}>{player.NickName}</color>";
+
+            string label = colouredName + (player.IsLocal ? " (You)" : "");
+
             if (originalRole != currentTeam)
                 label += $" | Original: {originalRole}";
+
             if (!string.IsNullOrEmpty(caughtTime))
                 label += $" | Caught: {caughtTime}";
+
             if (team == Team.Seeker)
                 label += $" | Catches: {catchesValue}";
 
-            Color rowColor = new Color(0.25f, 0.25f, 0.3f, 0.5f);
+            Color rowColour = new Color(0.25f, 0.25f, 0.3f, 0.5f);
 
-            Rect rowRect = GUILayoutUtility.GetRect(new GUIContent(label), playerStyle,
-                GUILayout.ExpandWidth(true), GUILayout.Height(rowHeight));
+            Rect rowRect = GUILayoutUtility.GetRect(
+                new GUIContent(label),
+                playerStyle,
+                GUILayout.ExpandWidth(true),
+                GUILayout.Height(rowHeight));
 
-            GUI.DrawTexture(rowRect, MakeTex(1, 1, rowColor));
-            GUI.Label(new Rect(rowRect.x + 8, rowRect.y, rowRect.width - 16, rowRect.height), label, playerStyle);
+            UIHelper.DrawBackground(rowRect, rowColour);
+
+            GUI.Label(new Rect(rowRect.x + 8, rowRect.y, rowRect.width - 16, rowRect.height),
+                label,
+                playerStyle);
         }
 
         private string FormatTime(float seconds)
